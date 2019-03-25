@@ -42,7 +42,7 @@ after_success:
     then
       set -e
       cd ${TRAVIS_BUILD_DIR}
-      ./build-all
+      scripts/build-all
       go get github.com/aktau/github-release
       github-release info --user danhunsaker --repo calends --tag ${TRAVIS_TAG} || \
         github-release release --user danhunsaker --repo calends --tag ${TRAVIS_TAG} --draft
@@ -55,6 +55,7 @@ after_success:
           --name "$(echo ${asset} | sed 's:dist/(bin/)?::;s/windows/win/;s/win-4.0/win-nt/;s/win-6.0/win-vista/;s/win-6.1/win-7/;s/win-6.3/win-8.1/;s/win-10.0/win-10/;s/darwin/mac-os/;s/arm-/armv/')" \
           --file "${asset}"
       done
+      set +e
     fi
 
 jobs:
